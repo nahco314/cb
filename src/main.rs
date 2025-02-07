@@ -1,18 +1,6 @@
 use atty::Stream;
 use std::io::{self, Read, Write};
 
-fn get_argument() -> Option<String> {
-    let args: Vec<String> = std::env::args().collect();
-    if args.len() == 1 {
-        None
-    } else if args.len() == 2 {
-        Some(args[1].clone())
-    } else {
-        eprintln!("Error: Too many arguments");
-        std::process::exit(1);
-    }
-}
-
 #[cfg(not(target_os = "linux"))]
 fn set_text(text: &str) {
     let mut clipboard = match arboard::Clipboard::new() {
@@ -70,26 +58,12 @@ fn main() {
     let stdin_is_piped = !atty::is(Stream::Stdin);
     let stdout_is_piped = !atty::is(Stream::Stdout);
 
-    let arg = get_argument();
-
     // Error handling
 
     // `cb < file > file`
     if stdin_is_piped && stdout_is_piped {
         eprintln!("Error: Both stdin and stdout are piped");
         std::process::exit(1);
-    }
-
-    // `cb "text" > file`
-    if arg.is_some() && (stdin_is_piped || stdout_is_piped) {
-        eprintln!("Error: Text and redirection are specified at the same time");
-        std::process::exit(1);
-    }
-
-    // `cb "text"`
-    if let Some(text) = arg {
-        set_text(&text);
-        return;
     }
 
     // `cb < file`

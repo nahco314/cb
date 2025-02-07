@@ -15,9 +15,6 @@ cb is a lightweight, no-frills command-line tool designed to interact with your 
 # paste to stdout
 cb
 
-# copy "text"
-cb "text"
-
 # paste to output.txt
 cb > output.txt
 
