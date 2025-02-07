@@ -1,0 +1,16 @@
+[package]
+name = "cb"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+arboard = "3.4.1"
+atty = "0.2.14"
+libc = "0.2.169"
+
+[profile.release]
+strip = true
+opt-level = "z"
+lto = true
+codegen-units = 1
+panic = "abort"
