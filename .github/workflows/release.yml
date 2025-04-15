@@ -81,8 +81,8 @@ jobs:
           sed -i 's#https://github.com/axodotdev/cargo-dist/releases/download/v1.0.0-rc.1/cargo-dist-installer.sh#https://axodotdev.artifacts.axodotdev.host/dist/v1.0.0-rc.1/dist-installer.sh#g' plan-dist-manifest.json
           sed -i 's#https://github.com/axodotdev/cargo-dist/releases/download/v1.0.0-rc.1/cargo-dist-installer.ps1#https://axodotdev.artifacts.axodotdev.host/dist/v1.0.0-rc.1/dist-installer.ps1#g' plan-dist-manifest.json
           sed -i 's#ubuntu-20.04#ubuntu-24.04#g' plan-dist-manifest.json
-          jq '(.ci.github.artifacts_matrix.include[] | select(.runner == "ubuntu-24.04") | .container) = {"image": "ubuntu:20.04"}' plan-dist-manifest.json > tmp.$$.json && mv tmp.$$.json your_file.json
-          jq '.systems."host:create:all:".build_environment.linux.glibc_version = {"major": 2, "series": 35}' plan-dist-manifest.json > tmp.$$.json && mv tmp.$$.json your_file.json
+          jq '(.ci.github.artifacts_matrix.include[] | select(.runner == "ubuntu-24.04") | .container) = {"image": "ubuntu:20.04"}' plan-dist-manifest.json > tmp.json && mv tmp.json plan-dist-manifest.json
+          jq '.systems."host:create:all:".build_environment.linux.glibc_version = {"major": 2, "series": 35}' plan-dist-manifest.json > tmp.json && mv tmp.json plan-dist-manifest.json
           echo "dist ran successfully"
           cat plan-dist-manifest.json
           echo "manifest=$(jq -c "." plan-dist-manifest.json)" >> "$GITHUB_OUTPUT"
