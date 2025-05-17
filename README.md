@@ -23,6 +23,9 @@ cb < input.txt
 
 # copy output of "ls"
 ls | cb
+
+# show size of clipboard content
+cb size
 ```
 
 And, that's it!
